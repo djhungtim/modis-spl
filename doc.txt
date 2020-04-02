@@ -1,0 +1,16 @@
+
+# Download command
+
+ wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 \
+https://ladsweb.modaps.eosdis.nasa.gov/archive/orders/501430605/ \
+ --header "Authorization: Bearer 5EBCF4AE-73E1-11EA-8BBA-9D2068AFA41D" -P D:\SPL\dataAnalysis\springData
+
+ # remove <> after you add app key & path dir
+
+File Naming Convention: 	
+MOD02QKM.AYYYYDDD.HHMM.CCC.YYYYDDDHHMMSS.hdf
+
+    AYYYYDDD = Acquisition Year and Day of Year
+    HHMM = Hour and minute of data collection start time, in UTC
+    CCC = Collection number
+    YYYYDDDHHMMSS = Production Date and Time
