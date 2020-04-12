@@ -10,7 +10,7 @@ clear
 data_dir = dir('D:\SPL\dataAnalysis\springData\SPLdataAnalysisspringData\MOD02QKM.A2019080.0005.061.2019080131355.hdf');
 
 %read file info
-fileinfo = hdfinfo("MOD02QKM.A2019080.0005.061.2019080131355.hdf");
+%fileinfo = hdfinfo("MOD02QKM.A2019080.0005.061.2019080131355.hdf");
 
 %import EV_250_RefSB
 EV_250_RefSB = hdfread('D:\SPL\dataAnalysis\springData\SPLdataAnalysisspringData\MOD02QKM.A2019080.0005.061.2019080131355.hdf', 'MODIS_SWATH_Type_L1B', 'Fields', 'EV_250_RefSB');
@@ -22,6 +22,10 @@ Longitude = hdfread('D:\SPL\dataAnalysis\springData\SPLdataAnalysisspringData\MO
 %% Set up Data
 
 % for idx = 1:5
-% EV_250_RefSB = EV_250_RefSB(1, :, :);
+
+EV_250_RefSB_x = EV_250_RefSB([], :, []);
+EV_250_RefSB_y = EV_250_RefSB([], [], :);
+EV_250_RefSB_z = EV_250_RefSB(:, [], []);
+%plot(EV_250_RefSB_x, EV_250_RefSB_y, '.b')
 
 % plot3(Latitude)
