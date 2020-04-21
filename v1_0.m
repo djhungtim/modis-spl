@@ -51,8 +51,8 @@ for i=1:datanum
     for j=1:bandnum
         Lawdata(:,:,j)=hdfread([MOD2(i).folder,'\',MOD2(i).name], '/MODIS_SWATH_Type_L1B/Data Fields/EV_1KM_RefSB', 'Index', {[j  1  1],[1  1  1],[1  2030  1354]});
     end
-    %lat=hdfread([MOD3(i).folder,'\',MOD3(i).name], '/MODIS_Swath_Type_GEO/Geolocation Fields/Latitude', 'Index', {[1  1],[1  1],[2030  1354]});
-    %lon=hdfread([MOD3(i).folder,'\',MOD3(i).name], '/MODIS_Swath_Type_GEO/Geolocation Fields/Longitude', 'Index', {[1  1],[1  1],[2030  1354]});
+    lat=hdfread([MOD3(i).folder,'\',MOD3(i).name], '/MODIS_Swath_Type_GEO/Geolocation Fields/Latitude', 'Index', {[1  1],[1  1],[2030  1354]});
+    lon=hdfread([MOD3(i).folder,'\',MOD3(i).name], '/MODIS_Swath_Type_GEO/Geolocation Fields/Longitude', 'Index', {[1  1],[1  1],[2030  1354]});
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    ppp=0;
