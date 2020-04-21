@@ -6,7 +6,7 @@
 clc
 clear 
 
-tic
+tic % start time tracker
 
 %file location 
 %dir to your file location
@@ -20,17 +20,19 @@ RSB_NUM = length(EV_RSB_dir); % calculate length of RSB data
 
 %import EV_1km_RefSB filename
 
-EV_1000_RefSB = uint16(zeros(2030,1354,(162)));
-for idx = 1:(RSB_NUM)
+EV_1000_RefSB = uint16(zeros(2030,1354,162));
+for idx = 1:RSB_NUM
 
     EV_1km_RefSB = hdfread([EV_RSB_dir(idx).folder,'\',EV_RSB_dir(idx).name],...
          'MODIS_SWATH_Type_L1B', 'Fields', 'EV_1KM_RefSB', 'Index',{[1  1  1],[1  1  1],[1  2030  1354]});
     EV_1000_RefSB(:,:,idx) = EV_1km_RefSB;
     
+    
 end
 %data = hdfread(filename,EOSname,param,value,...)
 %hdfread(..., 'Index', {start,stride,edge})
-toc
+toc %calculate due time
+clean  EV_1km_RefSB
 
 %% load GEO data
 
@@ -43,8 +45,8 @@ EV_GEO_dir = dir('D:\SPL\dataAnalysis\springDataGeo\MOD03*.hdf');
 %import both Latitude and Longitude
 GEO_NUM = length(EV_GEO_dir); % calculate length of GEO data
 
-Longitude_GEO = single(zeros(2030,1354,(162)));
-for idx = 1:(GEO_NUM)
+Longitude_GEO = single(zeros(2030,1354,162));
+for idx = 1:GEO_NUM
     
     Longitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
         'MODIS_Swath_Type_GEO', 'Fields', 'Longitude', 'Index',{[1 1],[1 1],[2030 1354]});
@@ -52,9 +54,10 @@ for idx = 1:(GEO_NUM)
 
 end
 toc
+clean Longitude
 
-Latitude_GEO = single(zeros(2030,1354,(162 )));
-for idx = 1:(GEO_NUM)
+Latitude_GEO = single(zeros(2030,1354,162));
+for idx = 1:GEO_NUM
     
     Latitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
         'MODIS_Swath_Type_GEO', 'Fields', 'Latitude', 'Index',{[1 1],[1 1],[2030 1354]});
@@ -62,7 +65,7 @@ for idx = 1:(GEO_NUM)
     
 end
 toc
-
+clean Latitude
 
 
 %% Set up Data
