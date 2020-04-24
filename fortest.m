@@ -1,6 +1,7 @@
-
+%% This code is for modis RefSB % GEO location plot
 
 %% load RSB data
+
 
 %clean up command and workspace
 clc
@@ -20,7 +21,7 @@ RSB_NUM = length(EV_RSB_dir); % calculate length of RSB data
 
 %import EV_1km_RefSB filename
 
-EV_1000_RefSB = uint16(zeros(2030,1354,162));
+EV_1000_RefSB = uint16(zeros(2030,1354,RSB_NUM));
 for idx = 1:RSB_NUM
 
     EV_1km_RefSB = hdfread([EV_RSB_dir(idx).folder,'\',EV_RSB_dir(idx).name],...
@@ -32,8 +33,8 @@ end
 %data = hdfread(filename,EOSname,param,value,...)
 %hdfread(..., 'Index', {start,stride,edge})
 toc %calculate due time
-clean  EV_1km_RefSB
-
+clear EV_1km_RefSB
+memory % show memory usage
 %% load GEO data
 
 %file location 
@@ -45,7 +46,7 @@ EV_GEO_dir = dir('D:\SPL\dataAnalysis\springDataGeo\MOD03*.hdf');
 %import both Latitude and Longitude
 GEO_NUM = length(EV_GEO_dir); % calculate length of GEO data
 
-Longitude_GEO = single(zeros(2030,1354,162));
+Longitude_GEO = single(zeros(2030,1354,GEO_NUM));
 for idx = 1:GEO_NUM
     
     Longitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
@@ -54,9 +55,10 @@ for idx = 1:GEO_NUM
 
 end
 toc
-clean Longitude
+clear Longitude
+memory
 
-Latitude_GEO = single(zeros(2030,1354,162));
+Latitude_GEO = single(zeros(2030,1354,GEO_NUM));
 for idx = 1:GEO_NUM
     
     Latitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
@@ -65,7 +67,8 @@ for idx = 1:GEO_NUM
     
 end
 toc
-clean Latitude
+clear Latitude
+memory
 
 
 %% Set up Data
