@@ -17,7 +17,7 @@ EV_RSB_dir = dir('D:\tim_spl\springData\MOD021KM*.hdf');
 % EV_RSB_data_filename = EV_RSB_dir.name;
 
 
-RSB_NUM = 10;%length(EV_RSB_dir); % calculate length of RSB data
+RSB_NUM = 1;%length(EV_RSB_dir); % calculate length of RSB data
 % RSB_NUM_arr = 1:RSB_NUM;
 
 %import EV_1km_RefSB filename
