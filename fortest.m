@@ -6,17 +6,18 @@
 %clean up command and workspace
 clc
 clear 
+close all 
 
 tic % start time tracker
 
 %file location 
 %dir to your file location
-EV_RSB_dir = dir('D:\SPL\dataAnalysis\springData\MOD021KM*.hdf');
+EV_RSB_dir = dir('D:\tim_spl\springData\MOD021KM*.hdf');
 % EV_RSB_data_folder = EV_RSB_dir.folder;
 % EV_RSB_data_filename = EV_RSB_dir.name;
 
 
-RSB_NUM = length(EV_RSB_dir); % calculate length of RSB data
+RSB_NUM = 10;%length(EV_RSB_dir); % calculate length of RSB data
 % RSB_NUM_arr = 1:RSB_NUM;
 
 %import EV_1km_RefSB filename
@@ -32,6 +33,8 @@ for idx = 1:RSB_NUM
 end
 %data = hdfread(filename,EOSname,param,value,...)
 %hdfread(..., 'Index', {start,stride,edge})
+EV_1000_RefSB(EV_1000_RefSB >= 65500 & EV_1000_RefSB <= 65535) = NaN;
+
 toc %calculate due time
 clear EV_1km_RefSB
 memory % show memory usage
@@ -39,12 +42,12 @@ memory % show memory usage
 
 %file location 
 %dir to your file location
-EV_GEO_dir = dir('D:\SPL\dataAnalysis\springDataGeo\MOD03*.hdf');
+EV_GEO_dir = dir('D:\tim_spl\springDataGeo\MOD03*.hdf');
 % EV_GEO_dir_folder = EV_GEO_dir.folder;
 % EV_GEO_data_filename = EV_GEO_dir.name;
 
 %import both Latitude and Longitude
-GEO_NUM = length(EV_GEO_dir); % calculate length of GEO data
+GEO_NUM = 10;%length(EV_GEO_dir); % calculate length of GEO data
 
 Longitude_GEO = single(zeros(2030,1354,GEO_NUM));
 for idx = 1:GEO_NUM
@@ -83,9 +86,19 @@ memory
 % EV_250_RefSB_z = EV_250_RefSB(:, [], []);
 
 
+
+
+
+
 %% plot data
-
-
+opengl('save', 'hardware')
+for idx = 1:RSB_NUM
+[Lat_alongTrack,Lon_alongTrack] = meshgrid(Latitude_GEO(1,:,idx),Longitude_GEO(:,1,idx));
+RSB_alongTrack = EV_1000_RefSB(:,:,idx);
+hold on
+contourf(Lat_alongTrack,Lon_alongTrack,RSB_alongTrack)
+end
+toc
 
 
 

@@ -25,9 +25,9 @@ scales=[ 0.014873 0.0099544 0.0065861 0.0040879 0.0040772 0.0011487 0.00084735..
 %%%%%%%%%%%%%%%%%%%%%%%%%位置也許需更換的資料%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-MOD2=dir('D:\SPL\dataAnalysis\springData\MOD02*.hdf');
+MOD2=dir('D:\tim_spl\springData\MOD02*.hdf');
 
-%MOD3=dir('C:\Users\Student\Desktop\ICASE\fall\MOD03*.hdf'); %??MOD3?
+MOD3=dir('D:\tim_spl\springDataGeo\MOD03*.hdf'); %??MOD3?
 
 
 %製造些空矩陣
@@ -49,15 +49,20 @@ llon=-180:0.1:180;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=1:datanum     
     for j=1:bandnum
-        Lawdata(:,:,j)=hdfread([MOD2(i).folder,'\',MOD2(i).name], '/MODIS_SWATH_Type_L1B/Data Fields/EV_1KM_RefSB', 'Index', {[j  1  1],[1  1  1],[1  2030  1354]});
+        Lawdata(:,:,j)=hdfread([MOD2(i).folder,'\',MOD2(i).name],...
+            '/MODIS_SWATH_Type_L1B/Data Fields/EV_1KM_RefSB', 'Index', {[j  1  1],[1  1  1],[1  2030  1354]});
     end
-    lat=hdfread([MOD3(i).folder,'\',MOD3(i).name], '/MODIS_Swath_Type_GEO/Geolocation Fields/Latitude', 'Index', {[1  1],[1  1],[2030  1354]});
-    lon=hdfread([MOD3(i).folder,'\',MOD3(i).name], '/MODIS_Swath_Type_GEO/Geolocation Fields/Longitude', 'Index', {[1  1],[1  1],[2030  1354]});
+    lat=hdfread([MOD3(i).folder,'\',MOD3(i).name],...
+        '/MODIS_Swath_Type_GEO/Geolocation Fields/Latitude', 'Index', {[1  1],[1  1],[2030  1354]});
+    lon=hdfread([MOD3(i).folder,'\',MOD3(i).name],...
+        '/MODIS_Swath_Type_GEO/Geolocation Fields/Longitude', 'Index', {[1  1],[1  1],[2030  1354]});
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    ppp=0;
     for lll=1:2030
      for ooo=1:1354
+         
+         
         if sum(Lawdata(lll,ooo,:))>32767*14
             continue;
         elseif (lat(lll,ooo)==-999 ||  lon(lll,ooo)==-999) 
@@ -82,7 +87,8 @@ contourf(zz)
 colorbar
 
 
-load('C:\Users\Student\Desktop\ICASE\hdcoast.mat');
+
+load('D:\tim_spl\modis-spl\hdcoast.mat');
 hold on
 plot(hdcoast(:,1)*10+1800,hdcoast(:,2)*10+900,'k','LineWidth',3)
 

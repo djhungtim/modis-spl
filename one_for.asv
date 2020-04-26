@@ -1,0 +1,83 @@
+%% This code is for modis RefSB % GEO location plot
+
+%% load RSB data
+
+
+%clean up command and workspace
+clc
+clear 
+close all 
+
+opengl('save', 'hardware')
+tic % start time tracker
+
+
+EV_RSB_dir = dir('D:\tim_spl\springData\MOD021KM*.hdf');
+
+
+RSB_NUM = 10;%length(EV_RSB_dir); % calculate length of RSB data
+
+EV_GEO_dir = dir('D:\tim_spl\springDataGeo\MOD03*.hdf');
+
+%import both Latitude and Longitude
+GEO_NUM = 10;%length(EV_GEO_dir); % calculate length of GEO data
+
+
+%import EV_1km_RefSB filename
+
+% EV_1000_RefSB = uint16(zeros(2030,1354,1));
+% Longitude_GEO = single(zeros(2030,1354,1));
+% Latitude_GEO = single(zeros(2030,1354,1));
+
+
+Lat_alongTrack = single(zeros(2030,1354,1));
+Lon_alongTrack = single(zeros(2030,1354,1));
+RSB_alongTrack = uint16(zeros(2030,1354,1));
+
+
+for idx = 1:RSB_NUM
+    
+    EV_1km_RefSB = hdfread([EV_RSB_dir(idx).folder,'\',EV_RSB_dir(idx).name],...
+        'MODIS_SWATH_Type_L1B', 'Fields', 'EV_1KM_RefSB', 'Index',{[1  1  1],[1  1  1],[1  2030  1354]});
+
+    
+EV_1km_RefSB(EV_1000_RefSB >= 65500 & EV_1000_RefSB <= 65535) = NaN;
+
+Longitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
+    'MODIS_Swath_Type_GEO', 'Fields', 'Longitude', 'Index',{[1 1],[1 1],[2030 1354]});
+
+Latitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
+    'MODIS_Swath_Type_GEO', 'Fields', 'Latitude', 'Index',{[1 1],[1 1],[2030 1354]});
+
+
+
+[Lat_alongTrack,Lon_alongTrack] = meshgrid(Latitude,Longitude);
+RSB_alongTrack = EV_1km_RefSB;
+hold on
+contourf(Lat_alongTrack,Lon_alongTrack,RSB_alongTrack)
+
+% clear EV_1000_RefSB
+% clear Longitude_GEO
+% clear Latitude_GEO
+clear Lat_alongTrack
+clear Lon_alongTrack
+clear RSB_alongTrack
+end
+
+toc
+memory
+
+%data = hdfread(filename,EOSname,param,value,...)
+%hdfread(..., 'Index', {start,stride,edge})
+
+
+
+
+
+
+
+
+
+
+
+
