@@ -84,6 +84,7 @@ end
  figure 
 zz=griddata(double(lonnn),double(lattt),double(dd),meshlon,meshlat);
 contourf(zz)
+writematrix(zz,'test.csv')
 colorbar
 
 

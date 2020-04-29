@@ -33,7 +33,7 @@ tic % start time tracker
 EV_RSB_dir = dir('D:\tim_spl\summerData\MOD021KM*.hdf');
 
 
-RSB_NUM = length(EV_RSB_dir); % calculate length of RSB data
+RSB_NUM = 20;%length(EV_RSB_dir); % calculate length of RSB data
 
 EV_GEO_dir = dir('D:\tim_spl\summerDataGeo\MOD03*.hdf');
 
@@ -47,25 +47,27 @@ GEO_NUM = length(EV_GEO_dir); % calculate length of GEO data
 EV_1km_RefSB = zeros(2030,1354);
 Longitude = zeros(2030,1354);
 Latitude = zeros(2030,1354);
-
+% along_track_Longitude = zeros(2030,1354);
+% along_track_Latitude = zeros(2030,1354);
+% along_track_EV_1km_RefSB = zeros(2030,1354);
 
 for idx = 1:RSB_NUM
     
     EV_1km_RefSB = hdfread([EV_RSB_dir(idx).folder,'\',EV_RSB_dir(idx).name],...
         'MODIS_SWATH_Type_L1B', 'Fields', 'EV_1KM_RefSB', 'Index',{[1  1  1],[1  1  1],[1  2030  1354]});
         
-    EV_1km_RefSB(EV_1km_RefSB >= 65500 & EV_1km_RefSB <= 65535) = 0;
-    EV_1km_RefSB(EV_1km_RefSB >= 32767) = 0;
+    EV_1km_RefSB(EV_1km_RefSB >= 65500 & EV_1km_RefSB <= 65535) = NaN;
+    EV_1km_RefSB(EV_1km_RefSB > 32767) = NaN;
     EV_1km_RefSB = double(EV_1km_RefSB);
     
     Longitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
         'MODIS_Swath_Type_GEO', 'Fields', 'Longitude', 'Index',{[1 1],[1 1],[2030 1354]});
-    Longitude(Longitude == -999) = 0;
+    Longitude(Longitude == -999) = NaN;
     Longitude = double(Longitude);
     
     Latitude = hdfread([EV_GEO_dir(idx).folder,'\',EV_GEO_dir(idx).name],...
         'MODIS_Swath_Type_GEO', 'Fields', 'Latitude', 'Index',{[1 1],[1 1],[2030 1354]});
-    Latitude(Latitude == -999) = 0;
+    Latitude(Latitude == -999) = NaN;
     Latitude = double(Latitude);
 %     
 %     [xq,yq] = meshgrid(min(Longitude(:,1)):.1:max(Longitude(:,1)), min(Latitude(:,1)):.1:max(Latitude(:,1)));
@@ -88,21 +90,27 @@ for idx = 1:RSB_NUM
 % vq2 = abs(F(xq1,yq1));
 % mesh(xq1,yq1,vq2)
 
-
+    along_track_Longitude = Longitude(:,1);
+    along_track_Latitude = Latitude(:,1);
+    along_track_EV_1km_RefSB = EV_1km_RefSB(:,1,1);
+    
+    writematrix([along_track_Longitude,along_track_Latitude,along_track_EV_1km_RefSB],'data.csv')
+    
+    
 
     hold on
-    plot3(Longitude(:,1),Latitude(:,1),EV_1km_RefSB(:,1,1),'r.')
+    plot3(along_track_Longitude,along_track_Latitude,along_track_EV_1km_RefSB,'r.')
 %     ylim([-40 40])
     hold on
     plot3(Longitude(1,:),Latitude(1,:),EV_1km_RefSB(1,:,1),'b.')
 %     ylim([-40 40])
-  
-    clear EV_1km_RefSB
-    clear Longitude
-    clear Latitude
+
 %     clear xq
 %     clear yq
-
+%   
+%     clear EV_1km_RefSB
+%     clear Longitude
+%     clear Latitude
 
 end
 
