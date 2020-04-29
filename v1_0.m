@@ -26,14 +26,14 @@ scales=[ 0.014988 0.0098706 0.0064758 0.0040139 0.0039943 0.0011444 0.00084513 0
 %%%%%%%%%%%%%%%%%%%%%%%%%dir to file location%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-MOD2=dir('D:\tim_spl\springData\MOD02*.hdf');
+MOD2=dir('D:\SPL\dataAnalysis\springData\MOD02*.hdf');
 
-MOD3=dir('D:\tim_spl\springDataGeo\MOD03*.hdf'); 
+MOD3=dir('D:\SPL\dataAnalysis\springDataGeo\MOD03*.hdf'); 
 
 
 %make some empty array
 
-datanum=10;%length(MOD2);  
+datanum=length(MOD2);  
 Lawdata(2030,1354,bandnum)=0;
 daa=0;
 lattt=[];
@@ -81,23 +81,23 @@ for i=1:datanum
     end
 clear  lat lon 
 end
- figure 
-zz=griddata(double(lonnn),double(lattt),double(dd),meshlon,meshlat);
-contourf(zz)
-writematrix(zz,'test.csv')
-colorbar
-
-
-
-load('D:\tim_spl\modis-spl\hdcoast.mat');
-hold on
-plot(hdcoast(:,1)*10+1800,hdcoast(:,2)*10+900,'k','LineWidth',3)
-
-set(gca,'XTick',[0:600:3600])
-set(gca,'YTick',[0:450:1800])
-set(gca,'xticklabel',{'180^oW','120^oW','60^oW','0^o','60^oE','120^oE','180^oE'});
-set(gca,'yticklabel',{'90^oS','45^oS','0^o','45^oN','90^oN'});
-title('2018 September Equinox Earth Radiance from MODIS Terra');
-title(colorbar,'Watts/m^2/sr')
-
+%  figure 
+% zz=griddata(double(lonnn),double(lattt),double(dd),meshlon,meshlat);
+% contourf(zz)
+writematrix([lonnn',lattt',dd'],'D:\SPL\dataAnalysis\DataCsv\csvtest.csv')
+% colorbar
+% 
+% 
+% 
+% load('D:\tim_spl\modis-spl\hdcoast.mat');
+% hold on
+% plot(hdcoast(:,1)*10+1800,hdcoast(:,2)*10+900,'k','LineWidth',3)
+% 
+% set(gca,'XTick',[0:600:3600])
+% set(gca,'YTick',[0:450:1800])
+% set(gca,'xticklabel',{'180^oW','120^oW','60^oW','0^o','60^oE','120^oE','180^oE'});
+% set(gca,'yticklabel',{'90^oS','45^oS','0^o','45^oN','90^oN'});
+% title('2018 September Equinox Earth Radiance from MODIS Terra');
+% title(colorbar,'Watts/m^2/sr')
+% 
 

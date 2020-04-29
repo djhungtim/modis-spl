@@ -94,7 +94,7 @@ for idx = 1:RSB_NUM
     along_track_Latitude = Latitude(:,1);
     along_track_EV_1km_RefSB = EV_1km_RefSB(:,1,1);
     
-    writematrix([along_track_Longitude,along_track_Latitude,along_track_EV_1km_RefSB],'data.csv')
+    writematrix([along_track_Longitude,along_track_Latitude,along_track_EV_1km_RefSB],'along_data.csv')
     
     
 
