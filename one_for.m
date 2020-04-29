@@ -69,7 +69,7 @@ for idx = 1:RSB_NUM
         'MODIS_Swath_Type_GEO', 'Fields', 'Latitude', 'Index',{[1 1],[1 1],[2030 1354]});
     Latitude(Latitude == -999) = NaN;
     Latitude = double(Latitude);
-%     
+    
 %     [xq,yq] = meshgrid(min(Longitude(:,1)):.1:max(Longitude(:,1)), min(Latitude(:,1)):.1:max(Latitude(:,1)));
 %     z1 = griddata(Longitude(:,1),Latitude(:,1),EV_1km_RefSB(:,1,1),double(xq),double(yq),'cubic');
 %     contourf(xq,yq,z1)
@@ -78,17 +78,17 @@ for idx = 1:RSB_NUM
 %     z2 = griddata(Longitude(1,:),Latitude(1,:),EV_1km_RefSB(1,:,1),double(xq1),double(yq1),'cubic');
 %     mesh(xq1,yq1,z2)
 
-% F = scatteredInterpolant(Longitude(:,1),Latitude(:,1),EV_1km_RefSB(:,1,1));
-% [xq,yq] = meshgrid(min(Longitude(:,1)):.1:max(Longitude(:,1)), min(Latitude(:,1)):.1:max(Latitude(:,1)));
-% F.Method = 'linear';
-% vq1 = abs(F(xq,yq));
-% mesh(xq,yq,vq1)
+%     F = scatteredInterpolant(Longitude(:,1),Latitude(:,1),EV_1km_RefSB(:,1,1));
+%     [xq,yq] = meshgrid(min(Longitude(:,1)):.1:max(Longitude(:,1)), min(Latitude(:,1)):.1:max(Latitude(:,1)));
+%     F.Method = 'linear';
+%     vq1 = abs(F(xq,yq));
+%     mesh(xq,yq,vq1)
 % 
-% F2 = scatteredInterpolant(Longitude(1,:)',Latitude(1,:)',EV_1km_RefSB(1,:,1)');
-% [xq1,yq1] = meshgrid(min(Longitude(1,:)):.1:max(Latitude(1,:)), min(Latitude(1,:)):.1:max(Latitude(1,:)));
-% F2.Method = 'linear';
-% vq2 = abs(F(xq1,yq1));
-% mesh(xq1,yq1,vq2)
+%     F2 = scatteredInterpolant(Longitude(1,:)',Latitude(1,:)',EV_1km_RefSB(1,:,1)');
+%     [xq1,yq1] = meshgrid(min(Longitude(1,:)):.1:max(Latitude(1,:)), min(Latitude(1,:)):.1:max(Latitude(1,:)));
+%     F2.Method = 'linear';
+%     vq2 = abs(F(xq1,yq1));
+%     mesh(xq1,yq1,vq2)
 
     along_track_Longitude = Longitude(:,1);
     along_track_Latitude = Latitude(:,1);
